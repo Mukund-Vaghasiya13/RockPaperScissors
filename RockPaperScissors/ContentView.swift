@@ -21,74 +21,73 @@ struct ContentView: View {
     @State var you = "🪨"
     @State var disableAllButton = false
     @State var result = ""
+
     
     var body: some View {
         NavigationStack {
-            VStack(spacing:10){
-                
-                
-                Text(result)
-                    .font(.system(size: 50))
-                    .fontWeight(.heavy)
-                
-                Spacer()
-                HStack{
-                    CardView(title: "Computer", itCanBeYouOrComputer: $Computer)
+            ScrollView(showsIndicators: false){
+                VStack(spacing:30){
+                    Text(result)
+                        .font(.system(size: 50))
+                        .fontWeight(.heavy)
                     
-                    Text("V/S")
-                        .bold()
-                    
-                    CardView(title: "You", itCanBeYouOrComputer: $you)
-                }
-                
-                Text("Select any Item form bellow")
-                    .font(.system(size: 20))
-                    .bold()
-                    .padding(.top,30)
-                
-                HStack{
-                    
-                    ForEach(itemOfCard, id: \.id) { i in
-                        Button(action: {
-                            disableAllButton = true
-                            withAnimation(.bouncy) {
-                                you = i.item
-                                Computer = itemOfCard.randomElement()!.item
-                            }
-                            
-                            resultChecking()
+                    HStack{
+                        CardView(title: "Computer", itCanBeYouOrComputer: $Computer)
                         
-                        }, label: {
-                            Text(i.item)
-                                .font(.system(size: 50))
-                                .frame(width: 85,height: 95)
-                                .background(.green)
-                                .cornerRadius(10)
-                                .shadow(radius: 10)
-                        }).disabled(disableAllButton)
+                        Text("V/S")
+                            .bold()
+                        
+                        CardView(title: "You", itCanBeYouOrComputer: $you)
                     }
                     
-                }
-                .padding()
-            
-                Spacer()
+                    Text("Select any Item form bellow")
+                        .font(.system(size: 20))
+                        .bold()
+                        .padding(.top,30)
+                    
+                    HStack{
+                        
+                        ForEach(itemOfCard, id: \.id) { i in
+                            Button(action: {
+                                disableAllButton = true
+                                withAnimation(.bouncy) {
+                                    you = i.item
+                                    Computer = itemOfCard.randomElement()!.item
+                                }
+                                
+                                resultChecking()
+                            
+                            }, label: {
+                                Text(i.item)
+                                    .font(.system(size: 50))
+                                    .frame(width: 85,height: 95)
+                                    .background(.green)
+                                    .cornerRadius(10)
+                                    .shadow(radius: 10)
+                            }).disabled(disableAllButton)
+                        }
+                        
+                    }
+                    .padding()
                 
-                Button(action: {
-                    result = ""
-                    you = "🪨"
-                    Computer = "🪨"
-                    disableAllButton = false
-                }, label: {
-                    Text("New Game")
-                        .frame(width: 200,height: 55)
-                        .background(.black)
-                        .foregroundStyle(.white)
-                        .font(.system(size: 25,weight: .heavy))
-                        .cornerRadius(10)
-                })
-            }
-            .navigationTitle("Game")
+                    
+                    Button(action: {
+                        result = ""
+                        you = "🪨"
+                        Computer = "🪨"
+                        disableAllButton = false
+                    }, label: {
+                        Text("New Game")
+                            .frame(width: 200,height: 55)
+                            .background(.black)
+                            .foregroundStyle(.white)
+                            .font(.system(size: 25,weight: .heavy))
+                            .cornerRadius(10)
+                    })
+                }
+                .navigationTitle("Game")
             .padding()
+            }
         }
     }
     
